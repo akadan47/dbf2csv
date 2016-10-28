@@ -37,7 +37,7 @@ Small command line utility to convert simple *.DBF files to *.CSV
 
 ###Example:
 
-	dbf2csv file.dbf > output.csv
+	dbf2csv input.dbf > output.csv
 	
 	# Grep output
 	dbf2csv file.dbf | grep <search_string>
