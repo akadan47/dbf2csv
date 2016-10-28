@@ -9,7 +9,7 @@ Small command line utility to convert simple *.DBF files to *.CSV
 
 ##Usage:
 
-	usage: dbf2csv [-h] [-v] [-ei INPUT_ENCODING] [-eo OUTPUT_ENCODING]
+	dbf2csv [-h] [-v] [-ei INPUT_ENCODING] [-eo OUTPUT_ENCODING]
 				   [-q {minimal,all,non-numeric,none}] [-d DELIMITER_CHAR]
 				   [-e ESCAPE_CHAR]
 				   input [output]
