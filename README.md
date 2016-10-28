@@ -40,11 +40,11 @@ Small command line utility to convert simple *.DBF files to *.CSV
 	dbf2csv input.dbf > output.csv
 	
 	# Grep output
-	dbf2csv file.dbf | grep <search_string>
+	dbf2csv file.dbf | grep <filter_string>
 	
-	# Tab-delimited CSV
-	dbf2csv . output/ -ie cp866 -d $'\t'
+	# Convert all *.dbf files from current dir, tab-delimited CSV
+	dbf2csv . output/ -d $'\t'
 	
-	# Quote all fields
-	dbf2csv /path/to/input/dir/ /path/to/output/dir/ -ie cp866 -oe utf8 -q all
+	# Convert all *.dbf files from input dir to output dir, with charset conversion, quote all fields
+	dbf2csv /path/to/input/dir/ /path/to/output/dir/ -ie cp866 -oe cp1251 -q all
 	
