@@ -23,10 +23,10 @@ def get_args():
     parser.add_argument('input')
     parser.add_argument('output', nargs='?', default=None)
 
-    parser.add_argument('-ei', '--input-encoding',
+    parser.add_argument('-ie', '--input-encoding',
                         default='cp850',
                         help='charset of *.dbf files (default: cp850)')
-    parser.add_argument('-eo', '--output-encoding',
+    parser.add_argument('-oe', '--output-encoding',
                         default='utf8',
                         help='charset of *.csv files (default: utf8)')
     parser.add_argument('-q', '--quoting-mode',

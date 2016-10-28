@@ -9,7 +9,7 @@ Small command line utility to convert simple *.DBF files to *.CSV
 
 ##Usage:
 
-	dbf2csv [-h] [-v] [-ei INPUT_ENCODING] [-eo OUTPUT_ENCODING]
+	dbf2csv [-h] [-v] [-ie INPUT_ENCODING] [-oe OUTPUT_ENCODING]
 				   [-q {minimal,all,non-numeric,none}] [-d DELIMITER_CHAR]
 				   [-e ESCAPE_CHAR]
 				   input [output]
@@ -23,9 +23,9 @@ Small command line utility to convert simple *.DBF files to *.CSV
 	optional arguments:
 	  -h, --help            show this help message and exit
 	  -v, --version         show program's version number and exit
-	  -ei INPUT_ENCODING, --input-encoding INPUT_ENCODING
+	  -ie INPUT_ENCODING, --input-encoding INPUT_ENCODING
 							charset of *.dbf files (default: cp850)
-	  -eo OUTPUT_ENCODING, --output-encoding OUTPUT_ENCODING
+	  -oe OUTPUT_ENCODING, --output-encoding OUTPUT_ENCODING
 							charset of *.csv files (default: utf8)
 	  -q {minimal,all,non-numeric,none}, --quoting-mode {minimal,all,non-numeric,none}
 							quoting mode for csv files (default: minimal)
@@ -43,8 +43,8 @@ Small command line utility to convert simple *.DBF files to *.CSV
 	dbf2csv file.dbf | grep <search_string>
 	
 	# Tab-delimited CSV
-	dbf2csv . output/ -ei cp866 -d $'\t'
+	dbf2csv . output/ -ie cp866 -d $'\t'
 	
 	# Quote all fields
-	dbf2csv /path/to/input/dir/ /path/to/output/dir/ -ei cp866 -eo utf8 -q all
+	dbf2csv /path/to/input/dir/ /path/to/output/dir/ -ie cp866 -oe utf8 -q all
 	
