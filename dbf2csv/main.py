@@ -92,15 +92,15 @@ def process_directory(input_dir_path, output_dir_path, args):
     if not input_files:
         exit(0)
 
+    if output_dir_path != input_dir_path:
+        if not os.path.exists(output_dir_path):
+            os.makedirs(output_dir_path)
+
     for input_file_path in input_files:
         output_file_path = '{}/{}.csv'.format(
             output_dir_path,
             os.path.splitext(os.path.basename(input_file_path))[0]
         )
-        if output_dir_path != input_dir_path:
-            if not os.path.exists(output_dir_path):
-                os.makedirs(output_dir_path)
-
         process_file(input_file_path, output_file_path, args)
 
 
