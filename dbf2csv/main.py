@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 import os
+import re
 import csv
 import sys
 import glob
@@ -87,7 +88,7 @@ def process_directory(input_dir_path, output_dir_path, args):
     if not output_dir_path:
         output_dir_path = input_dir_path
 
-    input_files = glob.glob('{}/*.dbf'.format(input_dir_path))
+    input_files = [f for f in glob.glob('{}/*'.format(input_dir_path)) if re.match('^.*\.dbf$', f, flags=re.IGNORECASE)]
 
     if not input_files:
         exit(0)
