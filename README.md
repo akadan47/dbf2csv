@@ -2,12 +2,12 @@
 
 Small command line utility to convert simple *.DBF files to *.CSV
 
-##Install:
+### Install:
 
     pip install dbf2csv
 
 
-##Usage:
+### Usage:
 
 	dbf2csv [-h] [-v] [-ie INPUT_ENCODING] [-oe OUTPUT_ENCODING]
 				   [-q {minimal,all,non-numeric,none}] [-d DELIMITER_CHAR]
@@ -35,7 +35,7 @@ Small command line utility to convert simple *.DBF files to *.CSV
 							escape char for csv files (default: "\")
 
 
-###Example:
+### Example:
 
 	dbf2csv input.dbf > output.csv
 	
