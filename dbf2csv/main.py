@@ -11,13 +11,14 @@ import argparse
 
 from dbfread import DBF
 
-from __init__ import __version__
+from . import __version__
 
+from io import open
+from builtins import str
 
 def get_args():
     """Get CLI arguments and options"""
     parser = argparse.ArgumentParser(
-        version=__version__,
         prog='dbf2csv',
         description='small utility to convert simple *.DBF files to *.CSV'
     )
@@ -40,39 +41,42 @@ def get_args():
     parser.add_argument('-e', '--escape-char',
                         default='\\',
                         help='escape char for csv files (default: "\\")')
+    parser.add_argument('--version', action='version',
+                        version='%(prog)s {version}'.format(version=__version__))
     return parser.parse_args()
 
 
 def __convert(input_file_path, output_file, args):
 
-    def write_row(writer, row, encoding):
-        buffer_row = []
-        for cell in row:
-            if isinstance(cell, basestring):  # TODO: Python 3 support
-                cell = cell.encode(encoding)
-            buffer_row.append(cell)
-        writer.writerow(buffer_row)
-
-    output_writer = csv.writer(output_file,
-                               quoting=args.quoting,
-                               escapechar=args.escape_char,
-                               delimiter=args.delimiter_char)
+    def encode_decode(x):
+        """
+        DBF returns a unicode string encoded as args.input_encoding.
+        We convert that back into bytes and then decode as args.output_encoding.
+        """
+        if not isinstance(x, str):
+            # DBF converts columns into non-str like int, float
+            x = str(x)
+        return x.encode(args.input_encoding).decode(args.output_encoding)
 
     try:
         input_reader = DBF(input_file_path,
                            encoding=args.input_encoding,
                            ignore_missing_memofile=True)
 
-        write_row(output_writer,
-                  input_reader.field_names,
-                  args.output_encoding)
+        output_writer = csv.DictWriter(output_file,
+                                   quoting=args.quoting,
+                                   escapechar=args.escape_char,
+                                   delimiter=args.delimiter_char,
+                                   fieldnames=[encode_decode(x) for x in input_reader.field_names])
+
+        output_writer.writeheader()
         for record in input_reader:
-            write_row(output_writer, record.values(), args.output_encoding)
+            row = {encode_decode(k):encode_decode(v) for k,v in record.items()}
+            output_writer.writerow(row)
 
     except (UnicodeDecodeError, LookupError):
         log.error('Error: Unknown encoding\n')
         exit(0)
-
     except UnicodeEncodeError:
         log.error('Error: Can\'t encode to output encoding: {}\n'.format(
             args.to_charset))
@@ -107,7 +111,7 @@ def process_directory(input_dir_path, output_dir_path, args):
 
 def process_file(input_file_path, output_file_path, args):
     if output_file_path:
-        with open(output_file_path, 'w') as output_file:
+        with open(output_file_path, 'w', encoding=args.output_encoding) as output_file:
             __convert(input_file_path, output_file, args)
     else:
         __convert(input_file_path, sys.stdout, args)
