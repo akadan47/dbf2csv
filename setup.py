@@ -15,6 +15,7 @@ setup(
         ],
     },
     install_requires=[
-        'dbfread==2.0.6'
+        'dbfread',
+        'future',
     ]
 )
