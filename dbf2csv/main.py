@@ -55,7 +55,7 @@ def __convert(input_file_path, output_file, args):
         """
         if not isinstance(x, str):
             # DBF converts columns into non-str like int, float
-            x = str(x)
+            x = str(x) if x is not None else ''
         return x.encode(args.input_encoding).decode(args.output_encoding)
 
     try:
